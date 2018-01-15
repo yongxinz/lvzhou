@@ -20,4 +20,7 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS += [
     'passport',
+    'adminset',
+    'activity',
+    'ranking'
 ]
