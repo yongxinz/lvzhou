@@ -19,5 +19,5 @@ ALLOWED_HOSTS = [
 ]
 
 INSTALLED_APPS += [
-    '',
+    'passport',
 ]
