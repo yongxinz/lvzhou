@@ -1,54 +1,64 @@
-//index.js
-//获取应用实例
-const app = getApp()
+var app = getApp()
+
+var interval;
+var varName;
+var ctx = wx.createCanvasContext('canvasArcCir');
 
 Page({
-  data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
-  },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
-  onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
+    data: {
+        windowWidth: 0,
+        windowHeight: 0
+    },
+    drawCircle: function () {
+        let that = this;
+        clearInterval(varName);
+        function drawArc(s, e) {
+            ctx.setFillStyle('white');
+            ctx.clearRect(0, 0, 250, 250);
+            ctx.draw();
+            var x = 150, y = 150, radius = 110;
+            ctx.setLineWidth(25);
+            ctx.setStrokeStyle('#d81e06');
+            ctx.setLineCap('round');
+            ctx.beginPath();
+            ctx.arc(that.data.windowWidth / 2, that.data.windowWidth / 2, radius, s, e, false);
+            ctx.stroke();
+            ctx.draw()
         }
-      })
+
+        var step = 1, startAngle = 1.5 * Math.PI, endAngle = 0;
+        var animation_interval = 1000, n = 60;
+        var animation = function () {
+            if (step <= n) {
+                endAngle = step * 2 * Math.PI / n + 1.5 * Math.PI;
+                drawArc(startAngle, endAngle);
+                step++;
+            } else {
+                clearInterval(varName);
+            }
+        };
+        varName = setInterval(animation, animation_interval);
+    },
+    onReady: function () {
+        //创建并返回绘图上下文context对象。
+        var cxt_arc = wx.createCanvasContext('canvasCircle');
+        cxt_arc.setLineWidth(25);
+        cxt_arc.setStrokeStyle('#eaeaea');
+        cxt_arc.setLineCap('round');
+        cxt_arc.beginPath();
+        cxt_arc.arc(this.data.windowWidth / 2, this.data.windowWidth / 2, 110, 0, 2 * Math.PI, false);
+        cxt_arc.stroke();
+        cxt_arc.draw();
+    },
+    onLoad: function (options) {
+        let that = this;
+        wx.getSystemInfo({
+            success: function (res) {
+                that.setData({
+                    windowWidth: res.windowWidth,
+                    windowHeight: res.windowHeight
+                });
+            }
+        });
     }
-  },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  }
-})
+});

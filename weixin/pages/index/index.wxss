@@ -1,16 +1,60 @@
 .placeholder{
-    margin: 5px;
-    padding: 0 10px;
+    /*margin: 5px;*/
+    /*padding: 0 10px;*/
     text-align: center;
     background-color: #EBEBEB;
     color: #cfcfcf;
 }
 
-.title {
-    margin: 5px;
-    font-size: 30px;
+.circle-box {
+  /*text-align: center;*/
+    /*margin-top: 10%;*/
 }
 
-.content-item {
-    margin-left: 20px;
+.circle {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    /*background-color: #09bb07;*/
+}
+
+.index-footer {
+    height: 49%;
+    align-items:center;
+}
+
+.index-footer-content {
+    margin-left: 10px;
+}
+
+.footer-section {
+    margin-left: 10px;
+    text-align: left
+}
+
+.footer-section-right {
+    margin-right: 10px;
+    float: right;
+    font-size: 30px
+}
+
+.footer-section-content {
+    font-size: 10px;
+}
+
+.footer-section-unit {
+    font-size: 15px
+}
+
+.draw_btn {
+    width: 35vw;
+    position: absolute;
+    top: 53vw;
+    right: 0;
+    left: 0;
+    margin: auto;
+    border: 1px #000 solid;
+    border-radius: 5vw;
 }
